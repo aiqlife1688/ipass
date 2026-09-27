@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>iPAS AI 應用規劃師｜考古題複習網</title>
+<style>
+:root{
+  --bg:#fff9fb;--card:#ffffff;--text:#1e2340;--muted:#6d748d;--line:#e8dcff;
+  --p:#ff5fa2;--p2:#7b61ff;--ok:#11a36c;--bad:#e5484d;--warn:#ff9f1c;
+  --cyan:#23b7ff;--mint:#27c7b8;--gold:#ffcc33;--peach:#ffb37b;--lav:#b695ff;
+  --shadow:0 14px 34px rgba(64,35,104,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;background:linear-gradient(180deg,#fff3fb 0,#eef7ff 220px,#fffdf5 520px,#f9fbff 100%);color:var(--text);font-size:20px;line-height:1.7}
+button,input,select,textarea{font:inherit}
+.wrap{max-width:1180px;margin:auto;padding:18px}
+.hero{background:linear-gradient(135deg,#ff5fa2 0%,#7b61ff 45%,#23b7ff 100%);color:#fff;border-radius:28px;padding:28px;box-shadow:0 18px 40px rgba(123,97,255,.25);position:relative;overflow:hidden;border:3px solid rgba(255,255,255,.35)}
+.hero:after{content:"AI";position:absolute;right:22px;top:-26px;font-size:160px;font-weight:900;opacity:.10}.hero:before{content:"";position:absolute;inset:auto -30px -30px auto;width:180px;height:180px;background:radial-gradient(circle,#ffffff66 0,#ffffff00 70%)}
+.hero h1{margin:0 0 8px;font-size:clamp(32px,5vw,52px)}
+.hero p{margin:4px 0;opacity:.93;font-size:20px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.badge{background:rgba(255,255,255,.22);padding:8px 13px;border-radius:999px;font-size:15px;border:1px solid rgba(255,255,255,.25)}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}
+nav button,.btn{border:0;border-radius:14px;padding:13px 18px;background:#fff;box-shadow:0 7px 16px rgba(43,57,100,.10);cursor:pointer;color:var(--text);font-weight:800;font-size:18px;border:2px solid #f0e6ff}
+nav button.active,.btn.primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-color:transparent;box-shadow:0 10px 24px rgba(123,97,255,.28)}
+.btn.ok{background:linear-gradient(135deg,#11a36c,#1ec98a);color:#fff}.btn.bad{background:linear-gradient(135deg,#ff6b6b,#e5484d);color:#fff}.btn.soft{background:linear-gradient(135deg,#fff0f8,#eef0ff);color:#5b41cc}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.col-4{grid-column:span 4}.col-6{grid-column:span 6}.col-8{grid-column:span 8}.col-12{grid-column:span 12}
+.metric{font-size:38px;font-weight:900;margin:4px 0}.muted{color:var(--muted)}
+.level{border-left:8px solid var(--p);background:linear-gradient(180deg,#fff7fc,#ffffff)}
+.level.mid{border-left-color:#23b7ff;background:linear-gradient(180deg,#f2fbff,#ffffff)}.level.adv{border-left-color:#ff9f1c;background:linear-gradient(180deg,#fff8ef,#ffffff)}
+.notice{background:linear-gradient(135deg,#fff7dd,#fff0f6);border:1px solid #ffd9a0;border-radius:16px;padding:14px 16px;box-shadow:0 8px 18px rgba(255,180,70,.12)}
+.section{display:none}.section.active{display:block}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select,input[type="search"],input[type="number"],textarea{border:1px solid #dfe3ec;border-radius:10px;padding:10px;background:#fff}
+.qbox h2{font-size:28px}.choice{display:block;width:100%;text-align:left;margin:11px 0;padding:16px 18px;border:1px solid #dfe3ec;border-radius:12px;background:#fff;cursor:pointer;font-size:20px;line-height:1.6}
+.choice:hover{background:linear-gradient(135deg,#fff5fa,#f5f6ff)}.choice.correct{background:linear-gradient(135deg,#e9fff5,#f7fffb);border-color:#9ddcc7}.choice.wrong{background:linear-gradient(135deg,#fff1f2,#fff9f9);border-color:#f2b4b8}
+.explain{margin-top:14px;padding:14px;border-radius:14px;background:linear-gradient(135deg,#f8f9ff,#fffdf7);line-height:1.8;border:1px solid #ebe8ff}.review-card{background:linear-gradient(180deg,#ffffff 0%,#fffdfd 100%);border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}.review-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:linear-gradient(180deg,#ff5fa2,#7b61ff,#23b7ff)}.review-q{font-size:25px;font-weight:900;line-height:1.6}.review-answer{font-size:21px;background:linear-gradient(135deg,#e7fff2,#f7fff9);border:1px solid #b9e4d5;padding:14px 16px;border-radius:14px;margin-top:12px;color:#0b2a6f;font-weight:900;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}.review-exp{font-size:19px;background:linear-gradient(135deg,#f7f8ff,#fff9ef);padding:14px 16px;border-radius:14px;margin-top:10px;border:1px solid #ece5ff}.review-option{display:flex;align-items:center;gap:12px;margin:9px 0;padding:13px 14px;border-radius:14px;border:2px solid #ece8f6;background:#fff;font-size:19px}.review-option.correct-opt{background:linear-gradient(135deg,#dff8ea,#effff7);border-color:#69c89f;color:#0b2a6f;font-weight:900;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}.review-option .opt-text{flex:1}.why-btn{border:0;border-radius:10px;padding:8px 12px;background:linear-gradient(135deg,#ffe8f3,#ebe7ff);color:#6242bd;font-weight:800;cursor:pointer;white-space:nowrap}.why-btn.icon-only{width:38px;height:38px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:24px;line-height:1;background:linear-gradient(135deg,#eef4ff,#e7e2ff);color:#173b7a;box-shadow:0 3px 8px rgba(60,60,120,.12);flex:0 0 38px}.why-btn.icon-only:hover{transform:scale(1.08);background:linear-gradient(135deg,#dfeaff,#dcd4ff)}.why-box{margin:6px 0 12px 0;padding:12px 14px;border-radius:12px;background:#fff8e7;border:1px solid #ffd99a;font-size:17px;display:none}.why-box.show{display:block}.correct-badge{display:inline-block;margin-left:8px;padding:3px 9px;border-radius:999px;background:#11a36c;color:#fff;font-size:14px;vertical-align:middle}
+.progress{height:12px;background:#f0eff7;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:linear-gradient(90deg,#ff5fa2,#7b61ff,#23b7ff)}
+.pills{display:flex;gap:7px;flex-wrap:wrap}.pill{padding:7px 11px;border-radius:999px;background:linear-gradient(135deg,#fff1f8,#eef4ff);font-size:14px;border:1px solid #ebddff;color:#5b41cc;font-weight:700}
+.table{width:100%;border-collapse:collapse}.table th,.table td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tag-ok{color:var(--ok);font-weight:800}.tag-bad{color:var(--bad);font-weight:800}
+.bigstart{font-size:18px;padding:15px 22px;border-radius:14px}
+footer{text-align:center;color:var(--muted);padding:30px 0 14px;font-size:18px}
+.kbd{font-family:monospace;background:#eef0f4;border:1px solid #d9dde6;border-radius:5px;padding:2px 5px}
+@media(max-width:760px){
+  .col-4,.col-6,.col-8{grid-column:span 12}.wrap{padding:10px}.hero{padding:20px;border-radius:18px}
+  nav{position:sticky;top:0;background:rgba(245,247,251,.94);padding:8px 0;z-index:10;backdrop-filter:blur(10px)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1>iPAS AI 應用規劃師｜考古題複習網</h1>
+    <p>初級・中級・高階模擬｜100+ 題答案式考前複習・隨機練習・模擬測驗・錯題本</p>
+    <p><b>楊貴傑老師製作</b></p>
+    <div class="badges"><span class="badge">📱 手機 RWD</span><span class="badge">💾 自動記錄進度</span><span class="badge">🧠 題目解析</span><span class="badge">🎯 弱點複習</span></div>
+  </header>
+
+  <nav id="nav">
+    <button class="active" data-sec="home">考前複習</button>
+    <button class="exam-only" data-sec="practice" style="display:none">題庫練習</button>
+    <button class="exam-only" data-sec="exam" style="display:none">模擬考</button>
+    <button class="exam-only" data-sec="wrong" style="display:none">錯題本</button>
+    <button class="exam-only" data-sec="stats" style="display:none">成績統計</button>
+    <button class="exam-only" data-sec="manage" style="display:none">題庫管理</button>
+  </nav>
+
+  <main>
+    <section id="home" class="section active">
+      <div class="notice">
+        <b>考前複習模式：</b>這裡不是只看章節摘要，而是直接看 <b>100+ 題考古題風格複習題</b>。
+        每題會先顯示 <b>正確答案＋解析</b>，讓您先記憶與理解；複習完成後再按「進入考試」。
+      </div>
+
+      <div class="card" style="margin-top:16px;text-align:center;padding:24px;background:linear-gradient(135deg,#fff4fb,#eef6ff);border:2px solid #eadfff">
+        <h2 style="font-size:34px;margin-top:0">🚀 不想先複習？可直接進入考試</h2>
+        <p class="muted">若您想直接做題，可按下面按鈕立刻切換到正式考試模式。</p>
+        <button class="btn primary bigstart" style="font-size:24px;padding:18px 36px" onclick="enterExamMode()">✅ 直接進入考試</button>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h2 style="font-size:34px;margin-top:0">🌈 考前複習題庫</h2>
+        <div class="controls">
+          <select id="reviewLevel">
+            <option>全部</option><option>初級</option><option>中級</option><option>高階模擬</option>
+          </select>
+          <select id="reviewCat"><option value="全部">全部主題</option></select>
+          <input id="reviewSearch" type="search" placeholder="搜尋題目關鍵字…" style="min-width:240px">
+          <button class="btn primary" onclick="renderReview()">篩選複習題</button>
+        </div>
+        <p class="muted">目前共 <b id="reviewCount">0</b> 題。複習階段直接顯示答案，不需要作答。</p>
+      </div>
+
+      <div id="reviewList" style="margin-top:16px"></div>
+
+      <div class="card" style="text-align:center;padding:30px;margin-top:18px">
+        <h2 style="font-size:34px">複習完成了嗎？</h2>
+        <p class="muted">按下後才會開啟正式考題模式，答案將不再直接顯示。</p>
+        <button class="btn primary bigstart" style="font-size:26px;padding:18px 40px" onclick="enterExamMode()">✅ 進入考試</button>
+      </div>
+    </section>
+
+    <section id="practice" class="section">
+      <div class="card">
+        <div class="controls">
+          <select id="levelSel"><option>全部</option><option>初級</option><option>中級</option><option>高階模擬</option></select>
+          <select id="catSel"><option value="全部">全部主題</option></select>
+          <select id="modeSel"><option value="順序">順序練習</option><option value="隨機">隨機練習</option></select>
+          <button class="btn primary" onclick="startPractice()">開始/重新篩選</button>
+        </div>
+      </div>
+      <div id="practiceBox" class="card qbox" style="margin-top:14px"></div>
+    </section>
+
+    <section id="exam" class="section">
+      <div class="grid">
+        <div class="card col-4">
+          <h3>模擬考設定</h3>
+          <label>級別</label><br><select id="examLevel" style="width:100%;margin:7px 0 12px"><option>初級</option><option>中級</option><option>高階模擬</option><option>全部</option></select>
+          <label>題數</label><br><input id="examCount" type="number" min="5" max="50" value="10" style="width:100%;margin:7px 0 12px">
+          <label>時間（分鐘）</label><br><input id="examMinutes" type="number" min="5" max="180" value="20" style="width:100%;margin:7px 0 16px">
+          <button class="btn primary bigstart" onclick="startExam()">開始模擬考</button>
+        </div>
+        <div class="card col-8" id="examBox"><h2>🎉 準備好了嗎？</h2><p class="muted">開始後會隨機出題，完成後顯示答對數、正確率與錯題解析。</p></div>
+      </div>
+    </section>
+
+    <section id="wrong" class="section"><div class="card"><h2>錯題本</h2><div id="wrongBox"></div></div></section>
+    <section id="stats" class="section"><div class="card"><h2>學習統計</h2><div id="statsBox"></div></div></section>
+
+    <section id="manage" class="section">
+      <div class="grid">
+        <div class="card col-6">
+          <h2>匯入自己的考古題</h2>
+          <p class="muted">可將您合法持有／自行整理的題目，以 JSON 格式貼入。資料只存在您的瀏覽器。</p>
+          <textarea id="importText" rows="13" style="width:100%" placeholder='[
+  {
+    "level":"初級",
+    "category":"人工智慧概念",
+    "q":"題目文字",
+    "choices":["A","B","C","D"],
+    "answer":1,
+    "explain":"解析文字"
+  }
+]'></textarea>
+          <div style="margin-top:10px"><button class="btn primary" onclick="importQuestions()">匯入題庫</button> <button class="btn soft" onclick="exportQuestions()">匯出題庫</button></div>
+        </div>
+        <div class="card col-6">
+          <h2>題庫狀態</h2>
+          <p>目前題數：<b id="qCount">0</b></p>
+          <p>本站內建的是依官方評鑑主題撰寫的<b>原創練習題</b>，不是逐字重製未授權的正式考題。</p>
+          <button class="btn bad" onclick="resetData()">清除學習紀錄</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>iPAS AI 應用規劃師複習工具｜楊貴傑老師製作<br><small>瀏覽器本機儲存，不需登入。</small></footer>
+</div>
+
+<script>
+const builtin = [{"level": "初級", "category": "人工智慧概念", "q": "下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "Prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "No Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "RAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "Human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "AI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "AI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在線上教學平台情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在線上教學平台情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在線上教學平台情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在線上教學平台情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在線上教學平台情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在線上教學平台情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在線上教學平台情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在線上教學平台情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在線上教學平台情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在線上教學平台情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在線上教學平台情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在線上教學平台情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在線上教學平台情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在線上教學平台情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在線上教學平台情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在線上教學平台情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在線上教學平台情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在門市零售情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在門市零售情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在門市零售情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在門市零售情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在門市零售情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在門市零售情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在門市零售情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在門市零售情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在門市零售情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在門市零售情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在門市零售情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在門市零售情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在門市零售情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在門市零售情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在門市零售情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在門市零售情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在門市零售情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在製造工廠情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在製造工廠情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在製造工廠情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在製造工廠情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在製造工廠情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在製造工廠情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在製造工廠情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在製造工廠情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在製造工廠情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在製造工廠情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在製造工廠情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在製造工廠情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在製造工廠情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在製造工廠情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在製造工廠情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在製造工廠情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在製造工廠情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在金融服務情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在金融服務情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在金融服務情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在金融服務情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在金融服務情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在金融服務情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在金融服務情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在金融服務情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在金融服務情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在金融服務情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在金融服務情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在金融服務情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在金融服務情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在金融服務情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在金融服務情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在金融服務情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在金融服務情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在醫療行政流程情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在醫療行政流程情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在醫療行政流程情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在醫療行政流程情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在醫療行政流程情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在醫療行政流程情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在醫療行政流程情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在醫療行政流程情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在醫療行政流程情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在醫療行政流程情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在醫療行政流程情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在醫療行政流程情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在醫療行政流程情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在醫療行政流程情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在醫療行政流程情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在醫療行政流程情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在醫療行政流程情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在人力資源部門情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}, {"level": "初級", "category": "機器學習", "q": "在人力資源部門情境中，使用已標記資料訓練垃圾郵件分類器，屬於哪一類？", "choices": ["監督式學習", "非監督式學習", "強化學習", "完全不需資料"], "answer": 0, "explain": "有明確標籤的資料用來訓練分類模型，屬於監督式學習。"}, {"level": "初級", "category": "資料處理", "q": "在人力資源部門情境中，資料中同一筆客戶紀錄重複出現，最適合先做什麼？", "choices": ["資料去重", "資料加密", "重新開機", "刪除所有欄位"], "answer": 0, "explain": "重複資料會影響統計與模型結果，因此應先進行去重。"}, {"level": "初級", "category": "生成式AI", "q": "在人力資源部門情境中，prompt 中加入角色、任務、限制與輸出格式，主要目的為何？", "choices": ["提升指令清晰度與輸出一致性", "讓模型變成離線", "保證永遠正確", "讓模型不用理解內容"], "answer": 0, "explain": "清楚描述角色、任務、限制與格式，有助於模型理解需求並穩定輸出。"}, {"level": "初級", "category": "AI治理與倫理", "q": "在人力資源部門情境中，企業使用生成式 AI 時，哪一項最應避免？", "choices": ["將機密資料直接貼入未經核准的公開工具", "建立資料分級", "設定使用規範", "進行人工覆核"], "answer": 0, "explain": "敏感或機密資料若直接輸入未經核准的服務，可能產生資安與隱私風險。"}, {"level": "初級", "category": "AI導入規劃", "q": "在人力資源部門情境中，企業第一次導入 AI，較合理的方式是？", "choices": ["先做小規模 PoC 驗證", "一次全面取代所有系統", "不設定指標", "只看工具名稱"], "answer": 0, "explain": "PoC 能以較低風險驗證可行性與效益。"}, {"level": "初級", "category": "No Code / Low Code", "q": "在人力資源部門情境中，no Code / Low Code 最大優勢之一是？", "choices": ["降低建立應用原型的技術門檻", "完全不需測試", "一定沒有資安風險", "一定比程式開發更快"], "answer": 0, "explain": "它可降低開發門檻，但仍需測試、治理與需求分析。"}, {"level": "中級", "category": "自然語言處理", "q": "在人力資源部門情境中，下列哪一項屬於 NLP 應用？", "choices": ["文字摘要", "影像分割", "物件偵測", "馬達控制"], "answer": 0, "explain": "NLP 常見任務包含摘要、翻譯、分類、問答與語意搜尋。"}, {"level": "中級", "category": "電腦視覺", "q": "在人力資源部門情境中，若要找出產品影像中瑕疵的位置，適合使用？", "choices": ["物件偵測或影像分割", "文字摘要", "語音辨識", "資料去重"], "answer": 0, "explain": "定位影像中的缺陷通常使用物件偵測或影像分割。"}, {"level": "中級", "category": "多模態AI", "q": "在人力資源部門情境中，多模態 AI 的特徵是？", "choices": ["能同時處理文字、影像、聲音等多種資料", "只能處理文字", "只能處理圖片", "不能生成內容"], "answer": 0, "explain": "多模態系統可理解或生成多種資料型態。"}, {"level": "中級", "category": "RAG", "q": "在人力資源部門情境中，rAG 的主要目的為何？", "choices": ["結合外部知識檢索來提升回答的領域正確性與可追溯性", "讓模型完全不使用資料", "只做圖片生成", "只做壓縮"], "answer": 0, "explain": "RAG 會先檢索外部知識，再提供給模型生成答案。"}, {"level": "中級", "category": "模型選擇", "q": "在人力資源部門情境中，企業選擇模型時，最完整的考量是？", "choices": ["效果、成本、延遲、隱私與部署限制", "只看參數量", "只看品牌", "只看是否免費"], "answer": 0, "explain": "模型選擇應綜合考量效果、成本、速度、治理與部署條件。"}, {"level": "中級", "category": "AI風險管理", "q": "在人力資源部門情境中，human-in-the-loop 的主要作用是？", "choices": ["加入人工覆核以降低錯誤與風險", "讓模型完全自動化", "取消稽核", "增加 token 數"], "answer": 0, "explain": "重要決策加入人工覆核，有助降低幻覺、偏誤與錯誤決策。"}, {"level": "高階模擬", "category": "企業AI架構", "q": "在人力資源部門情境中，企業規章常更新又需要引用來源，適合優先採用？", "choices": ["RAG 搭配知識庫", "每次都重新訓練大型模型", "只用舊模型知識", "完全不留引用"], "answer": 0, "explain": "常更新且需可追溯的知識，RAG 通常更彈性。"}, {"level": "高階模擬", "category": "Agent", "q": "在人力資源部門情境中，aI Agent 能自動寄信與查訂單時，最需注意？", "choices": ["工具權限、確認機制、稽核與失敗回復", "讓它取得最高權限", "取消登入", "永不記錄"], "answer": 0, "explain": "能採取外部行動的 Agent 應強化權限與安全控制。"}, {"level": "高階模擬", "category": "成本效益", "q": "在人力資源部門情境中，aI 專案 ROI 應包含？", "choices": ["建置、維護、人力、風險成本與可量化效益", "只算月租費", "只看使用人數", "只看回答速度"], "answer": 0, "explain": "完整 ROI 應比較總成本與可量化效益。"}, {"level": "高階模擬", "category": "AI治理", "q": "在人力資源部門情境中，高風險 AI 決策系統最適合的治理方式？", "choices": ["責任分工、人工覆核、版本與稽核紀錄", "結果直接生效且不可追蹤", "不留任何紀錄", "只靠供應商保證"], "answer": 0, "explain": "高風險場景需具備可追溯、可覆核與責任明確的治理機制。"}, {"level": "初級", "category": "人工智慧概念", "q": "在物流中心情境中，下列哪一項最符合人工智慧（AI）的概念？", "choices": ["讓電腦模擬人類部分認知與決策能力", "只用試算表做加總", "只要連上網路就算 AI", "所有自動化都等於 AI"], "answer": 0, "explain": "人工智慧的核心是在特定任務上，讓系統具備感知、判斷、學習或生成等能力。"}];
+
+let custom = JSON.parse(localStorage.getItem("ipas_custom")||"[]");
+let questions = [...builtin,...custom];
+let state = JSON.parse(localStorage.getItem("ipas_state")||'{"total":0,"correct":0,"wrongIds":[],"byCat":{}}');
+let pList=[], pIndex=0, locked=false, exam={list:[],i:0,score:0,answers:[],timer:null,left:0};
+
+function save(){localStorage.setItem("ipas_state",JSON.stringify(state))}
+function qid(q){return btoa(unescape(encodeURIComponent(q.level+"|"+q.category+"|"+q.q))).slice(0,40)}
+function refreshCats(){
+  let cats=[...new Set(questions.map(q=>q.category))].sort();
+  catSel.innerHTML='<option value="全部">全部主題</option>'+cats.map(x=>`<option>${x}</option>`).join("");
+  qCount.textContent=questions.length;
+}
+function navTo(id){
+  document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.sec===id));
+  if(id==="wrong") renderWrong(); if(id==="stats") renderStats();
+}
+document.querySelectorAll("#nav button").forEach(b=>b.onclick=()=>navTo(b.dataset.sec));
+function updateMetrics(){
+  mTotal.textContent=state.total;
+  mAcc.textContent=state.total?Math.round(state.correct/state.total*100)+"%":"0%";
+  mWrong.textContent=state.wrongIds.length;
+}
+let examMode = sessionStorage.getItem("ipas_exam_mode")==="1";
+function applyExamMode(){
+  document.querySelectorAll(".exam-only").forEach(x=>x.style.display=examMode?"":"none");
+}
+function enterExamMode(){
+  examMode=true;
+  sessionStorage.setItem("ipas_exam_mode","1");
+  applyExamMode();
+  navTo("practice");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function refreshReviewCats(){
+  let cats=[...new Set(questions.map(q=>q.category))].sort();
+  reviewCat.innerHTML='<option value="全部">全部主題</option>'+cats.map(x=>`<option>${x}</option>`).join("");
+}
+
+function optionUsageHint(q, idx){
+  const raw=(q.choices[idx]||"");
+  const text=raw.toLowerCase();
+  const cat=q.category;
+
+  if(text.includes("監督式"))
+    return `✅ 如果題目問「已有標籤資料，要做分類或迴歸」，正確答案就會是「${raw}」。例如垃圾郵件分類、房價預測。`;
+  if(text.includes("非監督式"))
+    return `✅ 如果題目問「沒有標籤資料，要做分群或找資料結構」，正確答案就會是「${raw}」。例如客戶分群。`;
+  if(text.includes("強化學習"))
+    return `✅ 如果題目問「系統透過獎勵與懲罰學習最佳策略」，正確答案就會是「${raw}」。例如遊戲策略或機器人控制。`;
+  if(text.includes("物件偵測"))
+    return `✅ 如果題目問「要找出影像中物件的位置」，正確答案就會是「${raw}」。例如偵測人、車或產品瑕疵位置。`;
+  if(text.includes("影像分割"))
+    return `✅ 如果題目問「要把影像中的區域或像素範圍切出來」，正確答案就會是「${raw}」。例如病灶範圍或瑕疵區域。`;
+  if(text.includes("文字摘要"))
+    return `✅ 如果題目問「把長篇文字濃縮成重點」，正確答案就會是「${raw}」。這屬於自然語言處理應用。`;
+  if(text.includes("語音"))
+    return `✅ 如果題目問「語音辨識、語音轉文字、文字轉語音或聲音處理」，正確答案就可能是「${raw}」。`;
+  if(text.includes("rag"))
+    return `✅ 如果題目問「要查詢外部知識庫、引用最新資料、提高可追溯性」，正確答案就會是「${raw}」。`;
+  if(text.includes("重新訓練") || text.includes("微調"))
+    return `✅ 如果題目問「讓模型學習特定風格、任務或行為模式」，正確答案才可能是「${raw}」；若只是知識常更新，通常會優先考慮 RAG。`;
+  if(text.includes("只看品牌") || text.includes("只看參數") || text.includes("只看是否免費"))
+    return `⚠️ 「${raw}」通常不會單獨成為模型選擇題的完整正確答案。較完整的答案應是同時考量效果、成本、延遲、隱私與部署限制。`;
+  if(text.includes("最高權限"))
+    return `⚠️ 「${raw}」通常不是 Agent 安全題的正確答案。正確觀念通常是「最小權限原則」，只給完成任務必要的權限。`;
+  if(text.includes("人工覆核"))
+    return `✅ 如果題目問「如何降低 AI 幻覺、錯誤決策或高風險輸出」，正確答案就可能是「${raw}」。`;
+  if(text.includes("poc"))
+    return `✅ 如果題目問「AI 導入初期如何降低風險並先驗證可行性」，正確答案就會是「${raw}」。`;
+  if(text.includes("資料去重"))
+    return `✅ 如果題目問「同一筆資料重複出現時應如何處理」，正確答案就會是「${raw}」。`;
+  if(text.includes("資料加密"))
+    return `✅ 如果題目問「如何避免資料被未授權讀取」，正確答案就可能是「${raw}」。`;
+  if(text.includes("no code") || text.includes("low code"))
+    return `✅ 如果題目問「如何降低開發門檻、快速建立應用原型或流程自動化」，正確答案就可能是「${raw}」。`;
+
+  return `✅ 如果題目核心條件改成符合「${raw}」的功能或情境，這個選項才可能成為正確答案。它多半會出現在「${cat}」類題目中。`;
+}
+function toggleWhy(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.toggle("show");
+}
+function renderReview(){
+  let lv=reviewLevel.value, cat=reviewCat.value, kw=(reviewSearch.value||"").trim().toLowerCase();
+  let list=questions.filter(q=>(lv==="全部"||q.level===lv)&&(cat==="全部"||q.category===cat)&&(!kw||(q.q+" "+q.explain).toLowerCase().includes(kw)));
+  reviewCount.textContent=list.length;
+  reviewList.innerHTML=list.map((q,i)=>{
+    let ans=String.fromCharCode(65+q.answer)+". "+q.choices[q.answer];
+    let levelStyle = q.level==="初級" ? "background:linear-gradient(180deg,#fff7fc,#ffffff)" : (q.level==="中級" ? "background:linear-gradient(180deg,#f2fbff,#ffffff)" : "background:linear-gradient(180deg,#fff8ef,#ffffff)");
+    return `<div class="review-card" style="${levelStyle}">
+      <div class="pills"><span class="pill">${q.level}</span><span class="pill">${q.category}</span><span class="pill">第 ${i+1} 題</span></div>
+      <div class="review-q">${q.q}</div>
+      <div style="margin-top:12px">${q.choices.map((c,n)=>{
+        const isCorrect=n===q.answer;
+        const wid=`why_${i}_${n}`;
+        return `<div class="review-option ${isCorrect?'correct-opt':''}">
+          <div class="opt-text">${String.fromCharCode(65+n)}. ${c}${isCorrect?'<span class="correct-badge">正確答案</span>':''}</div>
+          ${isCorrect?'':`<button class="why-btn icon-only" onclick="toggleWhy('${wid}')" title="查看這個選項適用在哪類題目" aria-label="查看選項說明">ⓘ</button>`}
+        </div>
+        ${isCorrect?'':`<div id="${wid}" class="why-box">💡 ${optionUsageHint(q,n)}<br><b>本題正確答案：</b><span style="color:#0b2a6f;font-weight:900;text-decoration:underline">${q.choices[q.answer]}</span><br><b>為什麼本題不能選這個：</b>因為題目目前描述的條件不符合「${q.choices[n]}」的適用情境。</div>`}
+        `;
+      }).join("")}</div>
+      <div class="review-answer">✅ <b>正確答案：</b>${ans}</div>
+      <div class="review-exp">💡 <b>解析：</b>${q.explain}</div>
+    </div>`;
+  }).join("") || '<div class="card"><p>沒有符合條件的複習題。</p></div>';
+}
+reviewSearch.addEventListener("input",()=>renderReview());
+reviewLevel.addEventListener("change",()=>renderReview());
+reviewCat.addEventListener("change",()=>renderReview());
+function quickStart(level){navTo("practice");levelSel.value=level;startPractice()}
+function startPractice(){
+  let lv=levelSel.value,cat=catSel.value;
+  pList=questions.filter(q=>(lv==="全部"||q.level===lv)&&(cat==="全部"||q.category===cat));
+  if(modeSel.value==="隨機") pList.sort(()=>Math.random()-.5);
+  pIndex=0;renderPractice();
+}
+function renderPractice(){
+  locked=false;
+  if(!pList.length){practiceBox.innerHTML="<h2>沒有符合條件的題目</h2>";return}
+  let q=pList[pIndex];
+  practiceBox.innerHTML=`
+  <div class="pills"><span class="pill">${q.level}</span><span class="pill">${q.category}</span><span class="pill">${pIndex+1}/${pList.length}</span></div>
+  <div class="progress" style="margin:12px 0"><div style="width:${(pIndex+1)/pList.length*100}%"></div></div>
+  <h2>${q.q}</h2>
+  <div>${q.choices.map((c,i)=>`<button class="choice" onclick="answerPractice(${i},this)">${String.fromCharCode(65+i)}. ${c}</button>`).join("")}</div>
+  <div id="pex"></div>
+  <div style="margin-top:12px"><button class="btn soft" onclick="prevP()">上一題</button> <button class="btn primary" onclick="nextP()">下一題</button></div>`;
+}
+function answerPractice(i,el){
+  if(locked)return;locked=true;let q=pList[pIndex],id=qid(q),ok=i===q.answer;
+  [...practiceBox.querySelectorAll(".choice")].forEach((b,n)=>{if(n===q.answer)b.classList.add("correct"); if(n===i&&!ok)b.classList.add("wrong")});
+  state.total++; if(ok){state.correct++;state.wrongIds=state.wrongIds.filter(x=>x!==id)} else if(!state.wrongIds.includes(id)) state.wrongIds.push(id);
+  state.byCat[q.category] ||= {t:0,c:0};state.byCat[q.category].t++;if(ok)state.byCat[q.category].c++;
+  pex.innerHTML=`<div class="explain"><b class="${ok?'tag-ok':'tag-bad'}">${ok?'✅ 答對了':'❌ 答錯了'}</b><br><b>解析：</b>${q.explain}</div>`;
+  save();updateMetrics();
+}
+function nextP(){if(!pList.length)return;pIndex=(pIndex+1)%pList.length;renderPractice()}
+function prevP(){if(!pList.length)return;pIndex=(pIndex-1+pList.length)%pList.length;renderPractice()}
+
+function startExam(){
+  clearInterval(exam.timer);
+  let lv=examLevel.value, pool=questions.filter(q=>lv==="全部"||q.level===lv).sort(()=>Math.random()-.5);
+  let n=Math.min(Math.max(5,+examCount.value||10),pool.length);
+  exam={list:pool.slice(0,n),i:0,score:0,answers:[],timer:null,left:(+examMinutes.value||20)*60};
+  exam.timer=setInterval(()=>{exam.left--;renderTimer();if(exam.left<=0){clearInterval(exam.timer);finishExam()}},1000);
+  renderExam();
+}
+function renderTimer(){let t=document.getElementById("timer");if(t)t.textContent=`⏱ ${Math.floor(exam.left/60)}:${String(exam.left%60).padStart(2,"0")}`}
+function renderExam(){
+  if(exam.i>=exam.list.length){finishExam();return}
+  let q=exam.list[exam.i];
+  examBox.innerHTML=`<div class="controls"><b>第 ${exam.i+1}/${exam.list.length} 題</b><span id="timer" class="pill"></span></div>
+  <div class="progress" style="margin:12px 0"><div style="width:${(exam.i+1)/exam.list.length*100}%"></div></div>
+  <div class="pills"><span class="pill">${q.level}</span><span class="pill">${q.category}</span></div>
+  <h2>${q.q}</h2>${q.choices.map((c,i)=>`<button class="choice" onclick="answerExam(${i})">${String.fromCharCode(65+i)}. ${c}</button>`).join("")}`;
+  renderTimer();
+}
+function answerExam(i){let q=exam.list[exam.i];exam.answers.push(i);if(i===q.answer)exam.score++;exam.i++;renderExam()}
+function finishExam(){
+  clearInterval(exam.timer); if(!exam.list.length)return;
+  let wrong=exam.list.map((q,i)=>({q,a:exam.answers[i]})).filter(x=>x.a!==x.q.answer);
+  exam.list.forEach((q,i)=>{
+    let ok=exam.answers[i]===q.answer,id=qid(q);state.total++;state.byCat[q.category] ||= {t:0,c:0};state.byCat[q.category].t++;
+    if(ok){state.correct++;state.byCat[q.category].c++;state.wrongIds=state.wrongIds.filter(x=>x!==id)}
+    else if(!state.wrongIds.includes(id))state.wrongIds.push(id);
+  });
+  save();updateMetrics();
+  examBox.innerHTML=`<h2>🎉 模擬考完成</h2><div class="metric">${exam.score}/${exam.list.length}</div>
+  <p>正確率：<b>${Math.round(exam.score/exam.list.length*100)}%</b></p>
+  ${wrong.length?'<h3>錯題解析</h3>'+wrong.map(x=>`<div class="explain"><b>${x.q.q}</b><br>正解：${String.fromCharCode(65+x.q.answer)}. ${x.q.choices[x.q.answer]}<br>${x.q.explain}</div>`).join(""):'<div class="explain tag-ok">全數答對！</div>'}`;
+  exam.list=[];
+}
+function renderWrong(){
+  let list=questions.filter(q=>state.wrongIds.includes(qid(q)));
+  wrongBox.innerHTML=list.length?list.map((q,i)=>`<div class="explain"><b>${i+1}. [${q.level}] ${q.q}</b><br>正解：${String.fromCharCode(65+q.answer)}. ${q.choices[q.answer]}<br>${q.explain}<br><button class="btn soft" style="margin-top:8px" onclick="reviewOne('${qid(q)}')">再練一次</button></div>`).join(""):"<p class='muted'>目前沒有錯題。</p>";
+}
+function reviewOne(id){let q=questions.find(x=>qid(x)===id);if(!q)return;navTo("practice");pList=[q];pIndex=0;renderPractice()}
+function renderStats(){
+  let rows=Object.entries(state.byCat).sort((a,b)=>(a[1].c/a[1].t)-(b[1].c/b[1].t));
+  statsBox.innerHTML=`<div class="grid"><div class="card col-4"><div class="muted">累積作答</div><div class="metric">${state.total}</div></div><div class="card col-4"><div class="muted">答對</div><div class="metric">${state.correct}</div></div><div class="card col-4"><div class="muted">整體正確率</div><div class="metric">${state.total?Math.round(state.correct/state.total*100):0}%</div></div></div>
+  <h3>各主題表現（正確率較低者優先複習）</h3><table class="table"><thead><tr><th>主題</th><th>作答</th><th>答對</th><th>正確率</th></tr></thead><tbody>${rows.map(([k,v])=>`<tr><td>${k}</td><td>${v.t}</td><td>${v.c}</td><td>${Math.round(v.c/v.t*100)}%</td></tr>`).join("")||'<tr><td colspan="4">尚無紀錄</td></tr>'}</tbody></table>`;
+}
+function importQuestions(){
+  try{
+    let arr=JSON.parse(importText.value);
+    if(!Array.isArray(arr))throw Error();
+    arr.forEach(q=>{if(!q.level||!q.category||!q.q||!Array.isArray(q.choices)||typeof q.answer!=="number")throw Error()});
+    custom=[...custom,...arr];localStorage.setItem("ipas_custom",JSON.stringify(custom));questions=[...builtin,...custom];refreshCats();alert(`已匯入 ${arr.length} 題`);
+  }catch(e){alert("JSON 格式不正確，請依範例格式輸入。")}
+}
+function exportQuestions(){
+  let blob=new Blob([JSON.stringify(questions,null,2)],{type:"application/json"});
+  let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="iPAS_AI題庫.json";a.click();URL.revokeObjectURL(a.href);
+}
+function resetData(){if(confirm("確定清除作答、錯題與統計紀錄？")){state={total:0,correct:0,wrongIds:[],byCat:{}};save();updateMetrics();renderStats();}}
+refreshCats();refreshReviewCats();renderReview();updateMetrics();startPractice();applyExamMode();
+</script>
+</body>
+</html>
